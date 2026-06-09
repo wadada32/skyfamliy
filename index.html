@@ -1,33 +1,482 @@
-<!doctype html>
-<html class="no-js" lang="">
-
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
-  <link rel="stylesheet" href="css/style.css">
-  <meta name="description" content="">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小可 ✨ 全世界最可爱的ENFJ</title>
+  <style>
+    :root {
+      --pink-light: #FFF0F3;
+      --pink: #FFB5C2;
+      --pink-mid: #FF8FA3;
+      --pink-deep: #E87080;
+      --lavender: #E8D5F5;
+      --white: #FFFFFF;
+      --text: #5D4037;
+      --text-light: #8D6E63;
+      --shadow: 0 4px 20px rgba(255, 143, 163, 0.2);
+      --shadow-lg: 0 8px 40px rgba(255, 143, 163, 0.3);
+      --radius: 20px;
+      --radius-sm: 12px;
+      --transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-  <meta property="og:image:alt" content="">
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" href="/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="icon.png">
+    body {
+      font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      background: linear-gradient(180deg, #FFF5F7 0%, #FFE8EC 15%, #FFF0F5 30%, #FDE8EC 50%, #FFF5F7 70%, #FFE8EC 85%, #FFF0F3 100%);
+      background-attachment: fixed;
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
 
-  <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#fafafa">
+    /* 飘落花瓣 */
+    .petals-container {
+      position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:hidden;
+    }
+    .petal {
+      position: absolute; top:-60px; animation: fall linear infinite; opacity:0.6; font-size:20px; filter:blur(0.5px);
+    }
+    @keyframes fall {
+      0%{transform:translateY(-60px) rotate(0deg) translateX(0px); opacity:0.7;}
+      20%{opacity:0.9;}
+      50%{transform:translateY(50vh) rotate(180deg) translateX(40px); opacity:0.6;}
+      80%{opacity:0.4;}
+      100%{transform:translateY(105vh) rotate(360deg) translateX(-20px); opacity:0.1;}
+    }
+
+    .nav-top { text-align:center; padding:20px 20px 0; position:relative; z-index:10; }
+    .nav-link-btn {
+      display:inline-block; background:rgba(255,255,255,0.85); backdrop-filter:blur(6px);
+      padding:10px 24px; border-radius:40px; font-size:0.95rem; font-weight:600;
+      color:var(--pink-deep); text-decoration:none; border:2px solid #FFD1DC;
+      box-shadow:0 4px 16px rgba(255,143,163,0.2); transition:all 0.35s; letter-spacing:1px;
+      background:linear-gradient(135deg, #FFF5F7, #FFE8EC);
+    }
+    .nav-link-btn:hover { background:#fff; border-color:#FF8FA3; box-shadow:0 6px 25px rgba(255,143,163,0.4); transform:translateY(-2px); }
+
+    .main-container { max-width:900px; margin:0 auto; padding:0 20px; }
+
+    .header-title { text-align:center; padding:20px 20px 10px; }
+    .header-title .icon-row { font-size:28px; letter-spacing:6px; animation: bounce-icons 2s infinite; }
+    @keyframes bounce-icons {
+      0%,100%{transform:translateY(0);} 30%{transform:translateY(-12px);} 50%{transform:translateY(0);} 70%{transform:translateY(-8px);}
+    }
+    .header-title h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem); font-weight:800;
+      background:linear-gradient(135deg, #FF8FA3, #E87080, #F0A0B0);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      margin:6px 0; letter-spacing:2px;
+    }
+    .header-title .subtitle { font-size:0.95rem; color:var(--text-light); letter-spacing:3px; }
+
+    /* 轮播图 */
+    .carousel-section { max-width:700px; margin:10px auto 30px; background:var(--white); border-radius:var(--radius); box-shadow:var(--shadow-lg); overflow:hidden; border:3px solid #FFD1DC; }
+    .carousel-wrapper { position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; background:#fce4ec; min-height:280px; }
+    .carousel-track { display:flex; width:100%; height:100%; transition:transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .carousel-slide { min-width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+    .carousel-slide img { width:100%; height:100%; object-fit:cover; }
+    .carousel-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:linear-gradient(135deg,#FFD1DC,#FFB5C2); color:#fff; font-size:1.5rem; }
+    .carousel-btn { position:absolute; top:50%; transform:translateY(-50%); z-index:10; width:44px; height:44px; border-radius:50%; border:none; background:rgba(255,255,255,0.85); color:var(--pink-deep); font-size:1.3rem; cursor:pointer; box-shadow:0 2px 12px rgba(0,0,0,0.1); transition:all 0.3s; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+    .carousel-btn:hover { background:#fff; box-shadow:0 4px 20px rgba(255,143,163,0.4); transform:translateY(-50%) scale(1.08); }
+    .carousel-btn.prev { left:16px; } .carousel-btn.next { right:16px; }
+    .carousel-dots { position:absolute; bottom:16px; left:50%; transform:translateX(-50%); display:flex; gap:10px; flex-wrap:wrap; }
+    .carousel-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.6); border:2px solid rgba(255,255,255,0.8); cursor:pointer; transition:all 0.3s; }
+    .carousel-dot.active { background:#fff; border-color:#fff; width:28px; border-radius:10px; box-shadow:0 0 10px rgba(255,255,255,0.7); }
+
+    /* 夸赞区域 */
+    .praise-section { margin:20px auto 30px; text-align:center; }
+    .section-label { display:inline-block; background:linear-gradient(135deg,#FFF0F3,#FFE0E8); padding:8px 24px; border-radius:30px; font-size:0.9rem; color:var(--pink-deep); letter-spacing:2px; margin-bottom:16px; font-weight:600; border:2px dashed #FFCCD5; }
+    .praise-container { position:relative; min-height:420px; transition:min-height 0.6s; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:14px; padding:20px 10px; }
+    .praise-card { background:var(--white); border-radius:var(--radius-sm); padding:14px 20px; font-size:0.95rem; color:var(--text); box-shadow:var(--shadow); border:2px solid #FFE4E9; transition:all var(--transition); white-space:nowrap; user-select:none; font-weight:500; }
+    .praise-card:hover { transform:translateY(-4px) scale(1.03); box-shadow:0 8px 28px rgba(255,143,163,0.3); border-color:#FFB5C2; }
+    .praise-card.heart-positioned { position:absolute !important; transition:all 0.7s cubic-bezier(0.34,1.56,0.64,1); font-size:0.82rem; padding:8px 14px; border-radius:20px; white-space:nowrap; }
+
+    .heart-btn-wrapper { text-align:center; margin:10px 0 25px; }
+    .heart-btn { display:inline-block; padding:16px 40px; font-size:1.2rem; font-weight:700; letter-spacing:2px; color:#fff; background:linear-gradient(135deg,#FF8FA3,#E87080); border:none; border-radius:50px; cursor:pointer; box-shadow:0 6px 25px rgba(232,112,128,0.45); transition:all 0.35s; }
+    .heart-btn:hover { transform:translateY(-3px) scale(1.04); box-shadow:0 10px 35px rgba(232,112,128,0.55); }
+    .heart-btn.pulse { animation:btn-pulse 2s infinite; }
+    @keyframes btn-pulse {
+      0%,100%{box-shadow:0 6px 25px rgba(232,112,128,0.45);}
+      50%{box-shadow:0 6px 40px rgba(232,112,128,0.75), 0 0 0 16px rgba(255,143,163,0.15);}
+    }
+
+    /* 盲盒网格 */
+    .blindbox-section { margin:30px auto 50px; text-align:center; }
+    .blindbox-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:24px; margin-top:20px; }
+    .blindbox-wrapper { position:relative; cursor:pointer; width:140px; height:140px; user-select:none; transition:transform 0.3s; }
+    .blindbox-wrapper:hover { transform:translateY(-4px); }
+    .blindbox { position:relative; width:100%; height:100%; }
+    .blindbox-body {
+      position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+      width:110px; height:95px; background:linear-gradient(180deg,#FFD1DC,#FFB5C2);
+      border-radius:14px 14px 10px 10px; box-shadow:0 6px 20px rgba(255,143,163,0.3), inset 0 2px 0 rgba(255,255,255,0.4);
+      border:3px solid #F0A0B0; display:flex; align-items:center; justify-content:center; z-index:2; transition:all 0.5s;
+    }
+    .blindbox-body::before { content:'?'; font-size:3.2rem; font-weight:900; color:rgba(255,255,255,0.7); transition:all 0.5s; }
+    .blindbox-lid {
+      position:absolute; top:5px; left:50%; transform:translateX(-50%);
+      width:118px; height:40px; background:linear-gradient(180deg,#FFB5C2,#F8A0B0);
+      border-radius:14px 14px 5px 5px; box-shadow:0 3px 12px rgba(255,143,163,0.3);
+      border:3px solid #F0A0B0; z-index:4; transition:all 0.55s cubic-bezier(0.34,1.56,0.64,1);
+      transform-origin:right bottom; display:flex; align-items:center; justify-content:center;
+    }
+    .blindbox-lid::after { content:'🎀'; font-size:1.2rem; }
+    .blindbox-wrapper.opened .blindbox-lid { transform:translateX(-50%) rotate(-35deg) translateY(-25px) translateX(25px); opacity:0.8; }
+    .blindbox-wrapper.opened .blindbox-body::before { content:'📦'; font-size:1.6rem; }
+    .popup-text {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0);
+      font-size:0.9rem; font-weight:800; color:#E87080; pointer-events:none; z-index:20;
+      white-space:nowrap; transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+      background:rgba(255,255,255,0.9); padding:6px 14px; border-radius:20px;
+      box-shadow:0 4px 15px rgba(255,143,163,0.4);
+    }
+    .popup-text.show { transform:translate(-50%,-50%) scale(1); animation:pop-bounce 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+    @keyframes pop-bounce {
+      0%{transform:translate(-50%,-50%) scale(0);}
+      50%{transform:translate(-50%,-50%) scale(1.2);}
+      70%{transform:translate(-50%,-50%) scale(0.9);}
+      85%{transform:translate(-50%,-50%) scale(1.05);}
+      100%{transform:translate(-50%,-50%) scale(1);}
+    }
+
+    /* 视频弹窗 */
+    .video-modal-overlay {
+      position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter:blur(8px);
+      z-index:100; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none;
+      transition: opacity 0.4s ease;
+    }
+    .video-modal-overlay.active { opacity:1; pointer-events:auto; }
+    .video-modal-box {
+      background:#fff; border-radius:24px; box-shadow:0 20px 60px rgba(255,143,163,0.5);
+      width:min(90vw, 700px); max-height:90vh; padding:20px; position:relative;
+      border:4px solid #FFD1DC; animation: modal-pop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modal-pop {
+      0%{transform:scale(0.7); opacity:0;}
+      100%{transform:scale(1); opacity:1;}
+    }
+    .modal-close-btn {
+      position:absolute; top:-15px; right:-15px; width:40px; height:40px;
+      background:linear-gradient(135deg,#FF8FA3,#E87080); color:#fff; border:none;
+      border-radius:50%; font-size:1.5rem; cursor:pointer; box-shadow:0 4px 15px rgba(232,112,128,0.5);
+      display:flex; align-items:center; justify-content:center; z-index:10; transition:transform 0.3s;
+    }
+    .modal-close-btn:hover { transform:scale(1.1); }
+    .video-modal-box video {
+      width:100%; max-height:70vh; border-radius:12px; background:#000; display:block;
+    }
+
+    @media (max-width:768px) {
+      .blindbox-wrapper { width:120px; height:120px; }
+      .blindbox-body { width:95px; height:82px; }
+      .blindbox-lid { width:102px; height:34px; }
+      .video-modal-box { padding:12px; }
+      .modal-close-btn { width:34px; height:34px; font-size:1.2rem; top:-10px; right:-10px; }
+    }
+    @media (max-width:400px) {
+      .blindbox-grid { gap:16px; }
+      .blindbox-wrapper { width:100px; height:100px; }
+      .blindbox-body { width:80px; height:68px; }
+      .blindbox-lid { width:86px; height:28px; }
+    }
+  </style>
 </head>
-
 <body>
 
-  <!-- Add your site or application content here -->
-  <p>Hello world! This is HTML5 Boilerplate.</p>
-  <script src="js/app.js"></script>
+<div class="petals-container" id="petalsContainer"></div>
 
+<div class="nav-top">
+  <a href="xiaowu.html" class="nav-link-btn">🐾 去看看萌萌小五 🐾</a>
+</div>
+
+<div class="main-container">
+  <div class="header-title">
+    <div class="icon-row">🌸 ✨ 💖 ✨ 🌸</div>
+    <h1>小可</h1>
+    <p class="subtitle">🌟 ENFJ · 温暖的小太阳 🌟</p>
+  </div>
+
+  <!-- 轮播图区域（10张） -->
+  <div class="carousel-section" id="carouselSection"></div>
+
+  <!-- 夸赞区域 -->
+  <div class="praise-section">s
+    <div class="praise-container" id="praiseContainer"></div>
+  </div>
+  <div class="heart-btn-wrapper">
+    <button class="heart-btn pulse" id="heartBtn">💖 点击变萌 💖</button>
+  </div>
+
+  <!-- 10个盲盒 -->
+  <div class="blindbox-section">
+    <span class="section-label">🎁 戳戳盲盒 · 有惊喜 (共10个) 🎁</span>
+    <div class="blindbox-grid" id="blindboxGrid"></div>
+  </div>
+</div>
+
+<!-- 视频弹窗（全局复用） -->
+<div class="video-modal-overlay" id="videoModalOverlay">
+  <div class="video-modal-box">
+    <button class="modal-close-btn" id="modalCloseBtn">✕</button>
+    <video id="modalVideo" controls autoplay playsinline style="width:100%; border-radius:12px;"></video>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ========== 配置区 ==========
+    // 📸 轮播图片（10张）- 替换为你的图片路径
+    const images = [
+      ,
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22%3E%3Crect fill=%22%23F8D5E0%22 width=%22800%22 height=%22500%22/%3E%3Ctext x=%22400%22 y=%22240%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22%3E📸 小可的照片2%3C/text%3E%3C/svg%3E',
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22%3E%3Crect fill=%22%23FFE0E8%22 width=%22800%22 height=%22500%22/%3E%3Ctext x=%22400%22 y=%22240%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22%3E📸 小可的照片3%3C/text%3E%3C/svg%3E',
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22%3E%3Crect fill=%22%23FFD1DC%22 width=%22800%22 height=%22500%22/%3E%3Ctext x=%22400%22 y=%22240%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22%3E📸 小可的照片4%3C/text%3E%3C/svg%3E',
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22%3E%3Crect fill=%22%23F8D5E0%22 width=%22800%22 height=%22500%22/%3E%3Ctext x=%22400%22 y=%22240%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22%3E📸 小可的照片5%3C/text%3E%3C/svg%3E',
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22%3E%3Crect fill=%22%23FFE0E8%22 width=%22800%22 height=%22500%22/%3E%3Ctext x=%22400%22 y=%22240%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22%3E📸 小可的照片6%3C/text%3E%3C/svg%3E',
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22%3E%3Crect fill=%22%23FFD1DC%22 width=%22800%22 height=%22500%22/%3E%3Ctext x=%22400%22 y=%22240%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22%3E📸 小可的照片7%3C/text%3E%3C/svg%3E',
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22%3E%3Crect fill=%22%23F8D5E0%22 width=%22800%22 height=%22500%22/%3E%3Ctext x=%22400%22 y=%22240%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22%3E📸 小可的照片8%3C/text%3E%3C/svg%3E',
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22%3E%3Crect fill=%22%23FFE0E8%22 width=%22800%22 height=%22500%22/%3E%3Ctext x=%22400%22 y=%22240%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22%3E📸 小可的照片9%3C/text%3E%3C/svg%3E',
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22800%22 height=%22500%22%3E%3Crect fill=%22%23FFD1DC%22 width=%22800%22 height=%22500%22/%3E%3Ctext x=%22400%22 y=%22240%22 text-anchor=%22middle%22 font-size=%2240%22 fill=%22white%22%3E📸 小可的照片10%3C/text%3E%3C/svg%3E',
+    ];
+
+    // 🎬 10个盲盒视频路径 - 替换为真实视频地址（留空则不显示视频）
+    const videoSources = [
+      '', // 盲盒1
+      '', // 盲盒2
+      '', // 盲盒3
+      '', // 盲盒4
+      '', // 盲盒5
+      '', // 盲盒6
+      '', // 盲盒7
+      '', // 盲盒8
+      '', // 盲盒9
+      '', // 盲盒10
+    ];
+
+    // 💖 夸赞语
+    const praiseMessages = [
+      { text:'小可就像小太阳，温暖照亮每个人', emoji:'☀️' },
+      { text:'你的同理心让世界都变得柔软了', emoji:'💗' },
+      { text:'你天生就是引领他人的一束光', emoji:'✨' },
+      { text:'你的热情感染了所有遇见你的人', emoji:'🔥' },
+      { text:'你是最温暖最治愈的存在', emoji:'🌸' },
+      { text:'你的善良和体贴让人如沐春风', emoji:'🍃' },
+      { text:'你总能洞察别人的需要给予关怀', emoji:'💝' },
+      { text:'你的领导力来自爱与真诚', emoji:'👑' },
+      { text:'你是天生的激励者让每个人都更好', emoji:'🌟' },
+      { text:'有你在的地方就充满欢声笑语', emoji:'🎵' },
+      { text:'你的存在是世界最美好的礼物', emoji:'🎀' },
+      { text:'你的乐观积极总能驱散所有阴霾', emoji:'🌈' },
+      { text:'和你在一起永远不用担心被忽视', emoji:'🤗' },
+      { text:'你让平凡的日子都闪闪发光', emoji:'💫' },
+      { text:'你是大家心中永远的宝藏女孩', emoji:'💎' },
+      { text:'你的温柔坚定是世间最动人的力量', emoji:'🦋' },
+    ];
+
+    // --- 飘落花瓣 ---
+    (function createPetals(){
+      const c=document.getElementById('petalsContainer');
+      const e=['🌸','💮','🌷','✿','🌺','💐','🌼','🩷'];
+      for(let i=0;i<30;i++){
+        const p=document.createElement('span'); p.className='petal';
+        p.textContent=e[Math.floor(Math.random()*e.length)];
+        p.style.left=Math.random()*100+'%';
+        p.style.fontSize=(14+Math.random()*22)+'px';
+        p.style.animationDuration=(8+Math.random()*14)+'s';
+        p.style.animationDelay=Math.random()*15+'s';
+        c.appendChild(p);
+      }
+    })();
+
+    // --- 轮播图 ---
+    (function buildCarousel(){
+      const s=document.getElementById('carouselSection');
+      const w=document.createElement('div'); w.className='carousel-wrapper';
+      const t=document.createElement('div'); t.className='carousel-track';
+      images.forEach((src,i)=>{
+        const slide=document.createElement('div'); slide.className='carousel-slide';
+        const img=document.createElement('img'); img.src=src; img.alt='小可'+(i+1);
+        img.onerror=()=>{ img.style.display='none'; slide.innerHTML='<div class="carousel-placeholder">📸 小可'+(i+1)+'</div>'; };
+        slide.appendChild(img); t.appendChild(slide);
+      });
+      w.appendChild(t);
+      const prev=document.createElement('button'); prev.className='carousel-btn prev'; prev.innerHTML='◀';
+      const next=document.createElement('button'); next.className='carousel-btn next'; next.innerHTML='▶';
+      w.appendChild(prev); w.appendChild(next);
+      const dots=document.createElement('div'); dots.className='carousel-dots';
+      images.forEach((_,i)=>{ const d=document.createElement('span'); d.className='carousel-dot'+(i===0?' active':''); d.dataset.index=i; dots.appendChild(d); });
+      w.appendChild(dots);
+      s.innerHTML=''; s.appendChild(w);
+
+      let idx=0, timer;
+      const go=(i)=>{ idx=(i+images.length)%images.length; t.style.transform=`translateX(-${idx*100}%)`; dots.querySelectorAll('.carousel-dot').forEach((d,j)=>d.classList.toggle('active',j===idx)); };
+      const nextSlide=()=>go(idx+1);
+      const prevSlide=()=>go(idx-1);
+      const resetTimer=()=>{ clearInterval(timer); timer=setInterval(nextSlide,3500); };
+      next.onclick=()=>{ nextSlide(); resetTimer(); };
+      prev.onclick=()=>{ prevSlide(); resetTimer(); };
+      dots.onclick=e=>{ if(e.target.classList.contains('carousel-dot')){ go(parseInt(e.target.dataset.index)); resetTimer(); } };
+      let touchX;
+      w.addEventListener('touchstart',e=>{ touchX=e.changedTouches[0].screenX; },{passive:true});
+      w.addEventListener('touchend',e=>{ const d=touchX-e.changedTouches[0].screenX; if(Math.abs(d)>50){ d>0?nextSlide():prevSlide(); resetTimer(); } });
+      timer=setInterval(nextSlide,3500);
+    })();
+
+    // --- 夸赞卡片 ---
+    const praiseContainer=document.getElementById('praiseContainer');
+    praiseMessages.forEach((m,i)=>{
+      const card=document.createElement('div'); card.className='praise-card';
+      card.innerHTML=`<span class="card-emoji">${m.emoji}</span> ${m.text}`;
+      card.dataset.index=i; praiseContainer.appendChild(card);
+    });
+
+    // --- 爱心逻辑 ---
+    let isHeart=false, origPos=[];
+    const heartBtn=document.getElementById('heartBtn');
+    const heartX=t=>16*Math.pow(Math.sin(t),3);
+    const heartY=t=>-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
+    const getPoints=n=>{ const p=[]; for(let i=0;i<n;i++){ const t=(i/n)*Math.PI*2; p.push({x:heartX(t),y:heartY(t)}); } return p; };
+    function toHeart(){
+      const cards=praiseContainer.querySelectorAll('.praise-card');
+      const pts=getPoints(cards.length);
+      const rect=praiseContainer.getBoundingClientRect();
+      const w=rect.width||700;
+      const mobile=window.innerWidth<=768, small=window.innerWidth<=400;
+      const scale=small?Math.min(w/38,11):mobile?Math.min(w/36,14):Math.min(w/34,17);
+      const cx=w/2, cy=small?200:mobile?240:280;
+      if(!isHeart){ origPos=[]; cards.forEach(c=>{ const r=c.getBoundingClientRect(); const cr=praiseContainer.getBoundingClientRect(); origPos.push({top:r.top-cr.top,left:r.left-cr.left}); }); }
+      praiseContainer.classList.add('heart-mode');
+      praiseContainer.style.minHeight=(small?380:mobile?450:550)+'px';
+      cards.forEach((c,i)=>{
+        c.classList.add('heart-positioned'); c.style.position='absolute'; c.style.top='0'; c.style.left='0';
+        c.style.transform=`translate(${cx+pts[i].x*scale}px,${cy+pts[i].y*scale}px) translate(-50%,-50%)`; c.style.margin='0';
+      });
+      isHeart=true; heartBtn.textContent='🔄 恢复原状'; heartBtn.classList.remove('pulse');
+    }
+    function resetHeart(){
+      const cards=praiseContainer.querySelectorAll('.praise-card');
+      cards.forEach((c,i)=>{ if(origPos[i]){ c.style.transition='all 0.6s cubic-bezier(0.34,1.56,0.64,1)'; c.style.transform=`translate(${origPos[i].left}px,${origPos[i].top}px)`; } });
+      setTimeout(()=>{
+        cards.forEach(c=>{ c.classList.remove('heart-positioned'); c.style.position=''; c.style.top=''; c.style.left=''; c.style.transform=''; c.style.margin=''; c.style.transition=''; });
+        praiseContainer.classList.remove('heart-mode'); praiseContainer.style.minHeight='';
+        isHeart=false; heartBtn.textContent='💖 点击变爱心 💖'; heartBtn.classList.add('pulse');
+      },650);
+    }
+    heartBtn.onclick=()=>{ isHeart?resetHeart():toHeart(); };
+    window.addEventListener('resize',()=>{ if(isHeart) toHeart(); });
+
+    // --- 盲盒与弹窗逻辑 ---
+    const blindboxGrid=document.getElementById('blindboxGrid');
+    const overlay=document.getElementById('videoModalOverlay');
+    const modalVideo=document.getElementById('modalVideo');
+    const closeBtn=document.getElementById('modalCloseBtn');
+    const blindboxStates=new Array(10).fill(false);
+    let currentOpenIndex=-1;
+
+    function closeModal(){
+      overlay.classList.remove('active');
+      modalVideo.pause();
+      modalVideo.src='';
+      if(currentOpenIndex>=0){
+        blindboxStates[currentOpenIndex]=false;
+        const wrapper=blindboxGrid.children[currentOpenIndex];
+        wrapper.classList.remove('opened');
+        wrapper.querySelector('.popup-text').classList.remove('show');
+        currentOpenIndex=-1;
+      }
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
+
+    modalVideo.addEventListener('ended', ()=>{
+      // 视频播放结束后自动关闭弹窗
+      setTimeout(closeModal, 500); // 稍作延迟让用户看到结束画面
+    });
+
+    // 粒子特效
+    function spawnParticles(wrapper){
+      const rect=wrapper.getBoundingClientRect();
+      const cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
+      const emojis=['💕','💖','💗','💝','✨','🌸','🩷'];
+      for(let i=0;i<10;i++){
+        const p=document.createElement('span');
+        p.style.cssText=`position:fixed;left:${cx}px;top:${cy}px;font-size:${1.2+Math.random()*2}rem;z-index:200;pointer-events:none;`;
+        p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+        p.style.setProperty('--px',(Math.random()-0.5)*200+'px');
+        p.style.setProperty('--py',(Math.random()-0.5)*200-40+'px');
+        p.style.animation='particle-burst 1.2s ease-out forwards';
+        document.body.appendChild(p);
+        setTimeout(()=>p.remove(),1300);
+      }
+    }
+
+    // 生成10个盲盒
+    for(let i=0; i<10; i++){
+      const wrapper=document.createElement('div');
+      wrapper.className='blindbox-wrapper';
+      wrapper.innerHTML=`
+                <div class="blindbox">
+                    <div class="blindbox-lid"></div>
+                    <div class="blindbox-body"></div>
+                </div>
+                <div class="popup-text">小可好萌 💕</div>
+            `;
+      const popup=wrapper.querySelector('.popup-text');
+
+      wrapper.addEventListener('click', (e)=>{
+        if(e.target.closest('.video-modal-overlay')) return; // 防止冒泡
+        if(!blindboxStates[i]){
+          // 打开盲盒
+          wrapper.classList.add('opened');
+          blindboxStates[i]=true;
+          setTimeout(()=>{ popup.classList.add('show'); }, 300);
+          spawnParticles(wrapper);
+          setTimeout(()=>{ popup.classList.remove('show'); }, 3500);
+
+          // 显示视频弹窗
+          if(videoSources[i]){
+            modalVideo.src=videoSources[i];
+            modalVideo.load();
+            overlay.classList.add('active');
+            modalVideo.play().catch(()=>{});
+          } else {
+            // 没有视频时也可以显示提示，此处跳过弹窗
+            console.log('盲盒'+(i+1)+'没有视频路径');
+          }
+          currentOpenIndex=i;
+        } else {
+          // 关闭盲盒（如果已打开）
+          wrapper.classList.remove('opened');
+          blindboxStates[i]=false;
+          popup.classList.remove('show');
+          // 同时关闭弹窗（如果当前弹窗就是这个盲盒）
+          if(currentOpenIndex===i){
+            closeModal();
+          }
+        }
+      });
+      blindboxGrid.appendChild(wrapper);
+    }
+
+    // 动态注入粒子动画的keyframes（如果不存在）
+    if(!document.getElementById('particle-keyframes')){
+      const style=document.createElement('style');
+      style.id='particle-keyframes';
+      style.textContent=`
+                @keyframes particle-burst {
+                    0%{transform:translate(0,0) scale(1); opacity:1;}
+                    100%{transform:translate(var(--px),var(--py)) scale(0); opacity:0;}
+                }
+            `;
+      document.head.appendChild(style);
+    }
+
+    console.log('🌸 小可页面：10张照片 + 10个盲盒（点击放大视频弹窗）');
+  })();
+</script>
 </body>
-
 </html>
